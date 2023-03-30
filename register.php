@@ -21,10 +21,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     //mindestens 1 Zeichen und maximal 30 Zeichen lang
     if (empty($firstname) || strlen($firstname) > 30) {
-      $error .= "Geben Sie bitte einen korrekten Vornamen ein.<br />";
+      $error .= "Please enter a correct first name.<br />";
     }
   } else {
-    $error .= "Geben Sie bitte einen Vornamen ein.<br />";
+    $error .= "Please enter your first name.<br />";
   }
 
   // Nachname ausgefüllt?
@@ -34,10 +34,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     //mindestens 1 Zeichen und maximal 30 Zeichen lang
     if (empty($lastname) || strlen($lastname) > 30) {
-      $error .= "Geben Sie bitte einen korrekten Nachname ein.<br />";
+      $error .= "Please enter a correct last surname.<br />";
     }
   } else {
-    $error .= "Geben Sie bitte einen Nachname ein.<br />";
+    $error .= "Please enter a surname.<br />";
   }
 
   // Email ausgefüllt?
@@ -47,10 +47,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     //mindestens 1 Zeichen und maximal 100 Zeichen lang, gültige Emailadresse
     if (empty($email) || strlen($email) > 100 || filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
-      $error .= "Geben Sie bitte eine korrekten Emailadresse ein.<br />";
+      $error .= "Please enter a correct email address.<br />";
     }
   } else {
-    $error .= "Geben Sie bitte eine Emailadresse ein.<br />";
+    $error .= "Please enter your email address.<br />";
   }
 
   // Username ausgefüllt?
@@ -60,10 +60,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     //mindestens 1 Zeichen , entsprich RegEX
     if (empty($username) || !preg_match("/(?=.*[a-z])(?=.*[A-Z])[a-zA-Z]{6,30}/", $username)) {
-      $error .= "Geben Sie bitte einen korrekten Usernamen ein.<br />";
+      $error .= "Please enter a correct username.<br />";
     }
   } else {
-    $error .= "Geben Sie bitte einen Username ein.<br />";
+    $error .= "Please enter a username.<br />";
   }
 
   // Passwort ausgefüllt
@@ -73,10 +73,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     //mindestens 1 Zeichen , entsprich RegEX
     if (empty($password) || !preg_match("/(?=^.{8,255}$)((?=.*\d+)(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/", $password)) {
-      $error .= "Geben Sie bitte einen korrektes Password ein.<br />";
+      $error .= "Please enter a correct password.<br />";
     }
   } else {
-    $error .= "Geben Sie bitte ein Password ein.<br />";
+    $error .= "Please enter a password.<br />";
   }
 
   // wenn kein Fehler vorhanden ist, schreiben der Daten in die Datenbank
@@ -105,7 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     // kein Fehler!
     if (empty($error)) {
-      $message .= "Die Daten wurden erfolgreich in die Datenbank geschrieben<br/ >";
+      $message .= "The data was successfully written to the database<br/ >";
       // Felder leeren und Weiterleitung auf anderes Script: z.B. Login!
       $username = $password = $firstname = $lastname = $email =  '';
       // Verbindung schliessen
@@ -140,7 +140,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
       </div>
     </nav>
   <div class="container">
-    <h1>Registrierung</h1>
+    <h1>Register</h1>
     <?php
     // Ausgabe der Fehlermeldungen
     if (!empty($error)) {
@@ -152,12 +152,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     <form action="" method="post">
       <!-- vorname -->
       <div class="form-group">
-        <label for="firstname">Vorname *</label>
+        <label for="firstname">First name *</label>
         <input type="text" name="firstname" class="form-control" id="firstname" value="<?php echo $firstname ?>" placeholder="Geben Sie Ihren Vornamen an." maxlength="30" required="true">
       </div>
       <!-- nachname -->
       <div class="form-group">
-        <label for="lastname">Nachname *</label>
+        <label for="lastname">Surname *</label>
         <input type="text" name="lastname" class="form-control" id="lastname" value="<?php echo $lastname ?>" placeholder="Geben Sie Ihren Nachnamen an" maxlength="30" required="true">
       </div>
       <!-- email -->
@@ -167,7 +167,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
       </div>
       <!-- benutzername -->
       <div class="form-group">
-        <label for="username">Benutzername *</label>
+        <label for="username">Username *</label>
         <input type="text" name="username" class="form-control" id="username" value="<?php echo $username ?>" placeholder="Gross- und Keinbuchstaben, min 6 Zeichen." pattern="(?=.*[a-z])(?=.*[A-Z])[a-zA-Z]{6,}" title="Gross- und Keinbuchstaben, min 6 Zeichen." maxlength="30" required="true">
       </div>
       <!-- password -->
