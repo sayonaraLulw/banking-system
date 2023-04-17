@@ -126,7 +126,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           <!-- Password input -->
           <div class="form-group">
             <label for="password">Password *</label>
-            <input type="password" name="password" class="form-control" id="password" value="" placeholder="Gross- und Kleinbuchstaben, Zahlen, Sonderzeichen, min. 8 Zeichen, keine Umlaute" pattern="(?=.*[a-z])(?=.*[A-Z])[a-zA-Z]{6,}" title="mindestens einen Gross-, einen Kleinbuchstaben, eine Zahl und ein Sonderzeichen, mindestens 8 Zeichen lang,keine Umlaute." maxlength="255" required="true">
+            <input type="password" name="password" class="form-control" id="password" value="" placeholder="Upper and lower case letters, numbers, special characters, min. 8 characters, no umlauts" pattern="(?=.*[a-z])(?=.*[A-Z])[a-zA-Z]{6,}" title="at least one upper case letter, one lower case letter, one number and one special character, at least 8 characters long, no umlauts." maxlength="255" required="true">
           </div>
           <button type="submit" name="btn-login" value="submit" class="btn btn-primary">Login</button>
           <button type="reset" name="btn-reset" value="reset" class="btn btn-secondary">Reset</button>
