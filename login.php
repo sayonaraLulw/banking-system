@@ -121,18 +121,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           <!-- Username input -->
           <div class="form-group">
             <label for="username">Username *</label>
-			<input type="password" name="password" class="form-control" id="password"
+			<input type="text" name="username" class="form-control" id="username"
+						value=""
 						placeholder="Upper and lowercase, atleast 6 characters."
-						pattern="(?=^.{8,}$)((?=.*\d+)(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
+						pattern="(?=.*[a-z])(?=.*[A-Z])[a-zA-Z]{6,}"
 						title="Upper and lowercase, atleast 6 characters."
-						maxlength="255"
+						maxlength="30" 
 						required="true">
 		</div>
           <!-- Password input -->
           <div class="form-group">
             <label for="password">Password *</label>
-            <input type="password" name="password" class="form-control" id="password" value="" placeholder="Upper and lower case letters, numbers, special characters, min. 8 characters, no umlauts" pattern="(?=.*[a-z])(?=.*[A-Z])[a-zA-Z]{6,}" title="at least one upper case letter, one lower case letter, one number and one special character, at least 8 characters long, no umlauts." maxlength="255" required="true">
-          </div>
+		    <input type="password" name="password" class="form-control" id="password"
+						placeholder="Upper and lower case letters, numbers, special characters, min. 8 characters, no umlauts"
+						pattern="(?=^.{8,}$)((?=.*\d+)(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
+						title="at least one upper case letter, one lower case letter, one number and one special character, at least 8 characters long, no umlauts."
+						maxlength="255"
+						required="true">
+		</div>
           <button type="submit" name="btn-login" value="submit" class="btn btn-primary">Login</button>
           <button type="reset" name="btn-reset" value="reset" class="btn btn-secondary">Reset</button>
         </form>
