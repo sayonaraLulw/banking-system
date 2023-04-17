@@ -71,7 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				// TODO - Session ID regenerieren
 				
 				// TODO - weiterleiten auf admin.php
-				header('Location: admin.php');
+				header('Location: home.php');
 				// TODO - Script beenden
 				die();
 			} else {
@@ -121,8 +121,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           <!-- Username input -->
           <div class="form-group">
             <label for="username">Username *</label>
-            <input type="text" name="username" class="form-control" id="username" value="" placeholder="Upper and lowercase, atleast 6 characters." pattern="(?=.*[a-z])(?=.*[A-Z])[a-zA-Z]{6,}" title="Upper and lowercase, atleast 6 characters." maxlength="30" required="true">
-          </div>
+			<input type="password" name="password" class="form-control" id="password"
+						placeholder="Upper and lowercase, atleast 6 characters."
+						pattern="(?=^.{8,}$)((?=.*\d+)(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
+						title="Upper and lowercase, atleast 6 characters."
+						maxlength="255"
+						required="true">
+		</div>
           <!-- Password input -->
           <div class="form-group">
             <label for="password">Password *</label>
