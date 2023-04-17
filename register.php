@@ -153,27 +153,27 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
       <!-- vorname -->
       <div class="form-group">
         <label for="firstname">First name *</label>
-        <input type="text" name="firstname" class="form-control" id="firstname" value="<?php echo $firstname ?>" placeholder="Geben Sie Ihren Vornamen an." maxlength="30" required="true">
+        <input type="text" name="firstname" class="form-control" id="firstname" value="<?php echo $firstname ?>" placeholder="Enter your first name." maxlength="30" required="true">
       </div>
       <!-- nachname -->
       <div class="form-group">
         <label for="lastname">Surname *</label>
-        <input type="text" name="lastname" class="form-control" id="lastname" value="<?php echo $lastname ?>" placeholder="Geben Sie Ihren Nachnamen an" maxlength="30" required="true">
+        <input type="text" name="lastname" class="form-control" id="lastname" value="<?php echo $lastname ?>" placeholder="Enter your surname." maxlength="30" required="true">
       </div>
       <!-- email -->
       <div class="form-group">
         <label for="email">Email *</label>
-        <input type="email" name="email" class="form-control" id="email" value="<?php echo $email ?>" placeholder="Geben Sie Ihre Email-Adresse an." maxlength="100" required="true">
+        <input type="email" name="email" class="form-control" id="email" value="<?php echo $email ?>" placeholder="Enter your email address." maxlength="100" required="true">
       </div>
       <!-- benutzername -->
       <div class="form-group">
         <label for="username">Username *</label>
-        <input type="text" name="username" class="form-control" id="username" value="<?php echo $username ?>" placeholder="Gross- und Keinbuchstaben, min 6 Zeichen." pattern="(?=.*[a-z])(?=.*[A-Z])[a-zA-Z]{6,}" title="Gross- und Keinbuchstaben, min 6 Zeichen." maxlength="30" required="true">
+        <input type="text" name="username" class="form-control" id="username" value="<?php echo $username ?>" placeholder="Upper and lower case letters, min 6 characters." pattern="(?=.*[a-z])(?=.*[A-Z])[a-zA-Z]{6,}" title="Upper and lower case letters, min 6 characters." maxlength="30" required="true">
       </div>
       <!-- password -->
       <div class="form-group">
         <label for="password">Password *</label>
-        <input type="password" name="password" class="form-control" id="password" placeholder="Gross- und Kleinbuchstaben, Zahlen, Sonderzeichen, min. 8 Zeichen, keine Umlaute" pattern="(?=^.{8,}$)((?=.*\d+)(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" title="mindestens einen Gross-, einen Kleinbuchstaben, eine Zahl und ein Sonderzeichen, mindestens 8 Zeichen lang,keine Umlaute." maxlength="255" required="true">
+        <input type="password" name="password" class="form-control" id="password" placeholder="Upper and lower case letters, numbers, special characters, min. 8 characters, no umlauts" pattern="(?=^.{8,}$)((?=.*\d+)(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" title="at least one upper case letter, one lower case letter, one number and one special character, at least 8 characters long,no umlauts." maxlength="255" required="true">
       </div>
       <!-- Send / Reset -->
       <button type="submit" name="btn-info" value="submit" class="btn btn-primary">Send</button>
