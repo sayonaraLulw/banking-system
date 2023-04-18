@@ -5,12 +5,12 @@ session_regenerate_id(true);
 
 $error = $message = '';
 
-if(isset($_SESSION['loggedin'])){
-    $message = "Welcome " . $_SESSION['username'];
+if(!isset($_SESSION['loggedin'])){
+    $error .= "You are not logged in, please <a href='login.php'>log in</a>";
     
     } else {
 
-    header('Location: notLoggedIn.php');
+    header('Location: home.php');
     }    
 ?>
 
@@ -30,14 +30,13 @@ if(isset($_SESSION['loggedin'])){
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <a class="navbar-brand" href="login.php">Banking System</a>
         <div class="navbar-nav">
-          <a class="nav-item nav-link" href="account.php">Account</a>
-          <a class="nav-item nav-link" href="logout.php">Logout</a>
+          <a class="nav-item nav-link active" href="login.php">Login</a>
       </div>
     </nav>
 
     </nav>
     <div class="container">
-        <h1>Home</h1>
+        <h1>Error</h1>
         <?php
         // Ausgabe der Fehlermeldungen
         if (!empty($error)) {

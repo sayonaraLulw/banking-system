@@ -9,7 +9,7 @@ include('include/dbconnector.inc.php');
 
 // Initialisierung
 $error = $message =  '';
-$firstname = $lastname = $email = $username = $passsord =  '';
+$firstname = $lastname = $email = $username = $password =  '';
 
 // Wurden Daten mit "POST" gesendet?
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
