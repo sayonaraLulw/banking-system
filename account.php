@@ -12,12 +12,13 @@ include('include/dbconnector.inc.php');
 if(!isset($_SESSION['loggedin'])){
     header('Location: notLoggedIn.php');
 }
-echo $_SESSION['username'];
+$username = $_SESSION['username'];
+
 // Initialisierung
 $error = $message =  '';
 $password =  '';
 // Wurden Daten mit "POST" gesendet?
-if ($_SERVER['REQUEST_METHOD'] == "POST") {
+
 
 if (!empty($_POST['btnChangePassword'])) {
     if ($_POST['current_password'] == '') {
@@ -32,6 +33,7 @@ if (!empty($_POST['btnChangePassword'])) {
         $error = 'New Password and current password can not be the same!';
     }
 }
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
 if (empty($error)) {
     // Query erstellen
     $query = "SELECT id, username, password from users where username = ?";
@@ -54,49 +56,50 @@ if (empty($error)) {
 
     // Userdaten lesen
     if ($row = $result->fetch_assoc()) {
-
+    $password = trim($_POST['current_password']);
+    $new_password = trim($_POST['new_password']);
         // Passwort ok?
-        if (password_verify($current_password, $row['password'])) {
+        if (password_verify($password, $row['password'])) {
 
-        if (empty($error)) {
-            // Password haschen
-            $password_hash = password_hash($password, PASSWORD_DEFAULT);
+                $password_hash = password_hash($new_password, PASSWORD_DEFAULT);
+                // Query erstellen
+                $query = "UPDATE users SET password=(?) WHERE username='$username'"; 
+                
+                // Query vorbereiten
+                $stmt = $mysqli->prepare($query);
+                if ($stmt === false) {
+                $error .= 'prepare() failed ' . $mysqli->error . '<br />';
+                }
+                
+                // Parameter an Query binden
+                
+                if (!$stmt->bind_param('s', $password_hash)) {
+                $error .= 'bind_param() failed ' . $mysqli->error . '<br />';
+                }
             
-            // Query erstellen
-            $query = "Insert into users (password) values (?) where username = ?";
+                // Query ausführen
+                if (!$stmt->execute()) {
+                $error .= 'execute() failed ' . $mysqli->error . '<br />';
+                }
             
-            // Query vorbereiten
-            $stmt = $mysqli->prepare($query);
-            if ($stmt === false) {
-            $error .= 'prepare() failed ' . $mysqli->error . '<br />';
-            }
+                // kein Fehler!
+                if (empty($error)) {
+                $success .= "You changed your Password succesfully please logout and login again<br/ >";
+                // Felder leeren und Weiterleitung auf anderes Script: z.B. Login! 
+                header('Location: home.php');
+                $current_password =  '';
+                // Verbindung schliessen
+                $mysqli->close();
+                // beenden des Scriptes
+                exit();
+                }
             
-            // Parameter an Query binden
-            if (!$stmt->bind_param('s', $password_hash)) {
-            $error .= 'bind_param() failed ' . $mysqli->error . '<br />';
-            }
-
-            // Query ausführen
-            if (!$stmt->execute()) {
-            $error .= 'execute() failed ' . $mysqli->error . '<br />';
-            }
-
-            // kein Fehler!
-            if (empty($error)) {
-            $message .= "You changed your Password succesfully please logout and login again<br/ >";
-            // Felder leeren und Weiterleitung auf anderes Script: z.B. Login!
-            $password =  '';
-            // Verbindung schliessen
-            $mysqli->close();
-            // beenden des Scriptes
-            exit();
-            }
+        }else{
+            $error = 'Invalid current password, please enter valid password!';
+            
         }
+    
     }
-    else{
-        $error = 'Invalid current password, please enter valid password!';
-    }
-}
 }
 }
 
