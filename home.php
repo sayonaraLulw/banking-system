@@ -6,16 +6,105 @@ include('include/dbconnector.inc.php');
 session_start();
 session_regenerate_id(true);
 
-$error = $message = '';
+$money_value = $error = $message = '';
 $username = $_SESSION['username'];
+echo $balance = '';
 
 if(isset($_SESSION['loggedin'])){
-    $message = "Welcome " . $_SESSION['username'];
-    
+    // Aktueller Kontostand auslesen
+    $query = "SELECT username, money FROM users WHERE username = ?";
+  
+    // Query vorbereiten
+    $stmt = $mysqli->prepare($query);
+    if ($stmt === false) {
+      $error .= 'prepare() failed ' . $mysqli->error . '<br />';
+    }
+  
+    // Parameter an Query binden
+    if (!$stmt->bind_param("s", $username)) {
+      $error .= 'bind_param() failed ' . $mysqli->error . '<br />';
+    }
+  
+    // Query ausführen
+    if (!$stmt->execute()) {
+      $error .= 'execute() failed ' . $mysqli->error . '<br />';
+    }
+  
+    // Daten auslesen
+    $result = $stmt->get_result();
+  
+    // Userdaten lesen
+    if ($row = $result->fetch_assoc()) {
+  
+    $balance = $row['money'];
+    }
     } else {
 
     header('Location: notLoggedIn.php');
-    }    
+}    
+
+
+
+
+if (!empty($_POST['btn-deposit'])) {
+    if ($_POST['money_value'] == '') {
+        $error = 'Please enter a figure!';
+    } elseif ($_POST['money_value'] == '0') {
+        $error = 'Please enter a figure over zero!';
+    } 
+}
+
+
+if (!empty($_POST['btn-withdraw'])) {
+  if ($_POST['money_value'] == '') {
+      $error = 'Please enter a figure!';
+  } elseif ($_POST['money_value'] == '0') {
+      $error = 'Please enter a figure over zero!';
+  } 
+  $money_value = trim($_POST['money_value']);
+  $calculated_balance = $balance - $money_value;
+  $message = 'Calculating new Balance';
+}
+
+//btn-reset 
+//UPDATE `users` SET `money`='100' WHERE username="Felizian";
+
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
+  if (empty($error)|| $message == 'Calculating new Balance') {
+      // Query erstellen
+      $query = "UPDATE users SET money=$calculated_balance WHERE username= ?";;
+      
+      // Query vorbereiten
+      $stmt = $mysqli->prepare($query);
+      if ($stmt === false) {
+          $error .= 'prepare() failed ' . $mysqli->error . '<br />';
+      }
+      // Parameter an Query binden
+      if (!$stmt->bind_param("s", $username)) {
+          $error .= 'bind_param() failed ' . $mysqli->error . '<br />';
+      }
+      // Query ausführen
+      if (!$stmt->execute()) {
+          $error .= 'execute() failed ' . $mysqli->error . '<br />';
+      }
+      // Daten auslesen
+      $result = $stmt->get_result();
+  
+      // Userdaten lesen
+      if ($row = $result->fetch_assoc()) {
+        // kein Fehler!
+        if (empty($error)) {
+          $message .= "You changed your Password succesfully please logout and login again<br/ >";
+          $money_value =  '';
+          // Verbindung schliessen
+          $mysqli->close();
+          // beenden des Scriptes
+          header('Location: home.php');
+          exit();
+      }
+    }
+  }
+}
 ?>
 
 <!DOCTYPE html>
@@ -41,7 +130,14 @@ if(isset($_SESSION['loggedin'])){
 
     </nav>
     <div class="container">
-        <h1>Home</h1>
+        <h1>Account</h1>
+    <div class="row">
+        <div class="col-md-6">
+                <div class="panel panel-default">
+                <div class="panel-heading"> 
+                <h4>Account balance <?=$balance?> CHF</h4>
+              </div>
+                <div class="panel-body">
         <?php
         // Ausgabe der Fehlermeldungen
         if (!empty($error)) {
@@ -49,71 +145,18 @@ if(isset($_SESSION['loggedin'])){
         } else if (!empty($message)) {
             echo "<div class=\"alert alert-success\" role=\"alert\">" . $message . "</div>";
         }
-        ?>
-        <!-- Kontostand Anzeige -->
-        <?php
-        $query = "SELECT username, money FROM users WHERE username = ?";
-
-        // Query vorbereiten
-        $stmt = $mysqli->prepare($query);
-        if ($stmt === false) {
-          $error .= 'prepare() failed ' . $mysqli->error . '<br />';
-        }
-        // Parameter an Query binden
-        if (!$stmt->bind_param("s", $username)) {
-          $error .= 'bind_param() failed ' . $mysqli->error . '<br />';
-        }
-        // Query ausführen
-        if (!$stmt->execute()) {
-          $error .= 'execute() failed ' . $mysqli->error . '<br />';
-        }
-        // Daten auslesen
-        $result = $stmt->get_result();
-
-        // Userdaten lesen
-		    if ($row = $result->fetch_assoc()) {
-          echo "<h2>Kontostand: " . $row["money"] . "</h2>";
-        }
+        
         ?>
 
         <!-- Kontostand ändern -->
         <form action="" method="POST">
-          <label for="deposit">Geld einzahlen</label>
-          <input type="text" name="modvalue" class="form-control" id="modvalue" value="0" maxlength="30"> <br>
-          <button type="submit" name="btn-login" value="submit" class="btn btn-primary">Einzahlen</button>
+          <label for="deposit">Deposit or Withdraw Money</label>
+          <input type="number" name="money_value" class="form-control" id="modvalue" value="0" maxlength="30"> <br>
+          <button type="submit" name="btn-deposit" value="submit" class="btn btn-primary">Deposit</button>
+          <button style="background-color:Tomato; border:1px solid Tomato;" type="submit" name="btn-withdraw" value="submit" class="btn btn-primary">Withdraw</button>
           <button type="reset" name="btn-reset" value="reset" class="btn btn-secondary">Reset</button>
         </form>
-        <?php
-
-        // Aktueller Kontostand auslesen
-        $query = "SELECT username, money FROM users WHERE username = ?";
-
-        // Query vorbereiten
-        $stmt = $mysqli->prepare($query);
-        if ($stmt === false) {
-          $error .= 'prepare() failed ' . $mysqli->error . '<br />';
-        }
-
-        // Parameter an Query binden
-        if (!$stmt->bind_param("s", $username)) {
-          $error .= 'bind_param() failed ' . $mysqli->error . '<br />';
-        }
-
-        // Query ausführen
-        if (!$stmt->execute()) {
-          $error .= 'execute() failed ' . $mysqli->error . '<br />';
-        }
-
-        // Daten auslesen
-        $result = $stmt->get_result();
-
-        // Userdaten lesen
-        $currentMoney = $row['money'];
-
-        // Geld einzahlen
-
-        ?>
-
+        
     </div>
 <!-- Footer -->
 <footer class="bg-dark fixed-bottom text-white text-center">

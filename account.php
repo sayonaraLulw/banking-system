@@ -3,8 +3,6 @@
 session_start();
 session_regenerate_id(true);
 
-$error = $message = '';
-
 // Datenbankverbindung
 include('include/dbconnector.inc.php');
 
@@ -56,8 +54,10 @@ if (empty($error)) {
 
     // Userdaten lesen
     if ($row = $result->fetch_assoc()) {
+
     $password = trim($_POST['current_password']);
     $new_password = trim($_POST['new_password']);
+
         // Passwort ok?
         if (password_verify($password, $row['password'])) {
 
@@ -86,7 +86,7 @@ if (empty($error)) {
                 if (empty($error)) {
                 $success .= "You changed your Password succesfully please logout and login again<br/ >";
                 // Felder leeren und Weiterleitung auf anderes Script: z.B. Login! 
-                header('Location: home.php');
+                header('Location: logout.php');
                 $current_password =  '';
                 // Verbindung schliessen
                 $mysqli->close();
