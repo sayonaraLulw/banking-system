@@ -121,51 +121,47 @@ if (empty($error)) {
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <a class="navbar-brand" href="login.php">Banking System</a>
         <div class="navbar-nav">
-        <a class="nav-item nav-link" href="home.php">Home</a>
-        <a class="nav-item nav-link" href="logout.php">Logout</a> 
-      </div>
-    </nav>
-
+            <a class="nav-item nav-link" href="home.php">Home</a>
+            <a class="nav-item nav-link" href="logout.php">Logout</a> 
+        </div>
     </nav>
     <div class="container">
-        <h1>Account</h1>
-        
-    <div class="row">
-        <div class="col-md-6">
+        <h1>Account</h1> 
+        <div class="row">
+            <div class="col-md-6">
                 <div class="panel panel-default">
-                <div class="panel-heading"> 
-                <h4>Change Password</h4></div>
-                <div class="panel-body">
+                    <div class="panel-heading"> 
+                        <h4>Change Password</h4></div>
+                            <div class="panel-body">
 
-                     <?php
-                    if ($error != '') {
-                        echo '<div class="alert alert-danger"><strong>Error: </strong> ' . $error . '</div>';
-                    }
-                    if ($success != '') {
-                        echo '<div class="alert alert-success"><strong>Success: </strong> ' . $success . '</div>';
-                    }
-                    ?>
+                            <?php
+                            if ($error != '') {
+                                echo '<div class="alert alert-danger"><strong>Error: </strong> ' . $error . '</div>';
+                            }
+                            if ($success != '') {
+                                echo '<div class="alert alert-success"><strong>Success: </strong> ' . $success . '</div>';
+                            }
+                            ?>
 
-                    <form action="account.php" method="post">
-                        <div class="form-group">
-                            <input type="password" name="current_password" class="form-control" placeholder="Current Password">
-                        </div>
-                        <div class="form-group">
-                            <input type="password" name="new_password" class="form-control" placeholder="New Password">
-                        </div>
-                        <div class="form-group">
-                            <input type="password" name="confirm_new_password" class="form-control" placeholder="Confirm New Password">
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" name="btnChangePassword" class="btn btn-primary" value="Change Password"/>
-                        </div>
-                    </form>
+                                <form action="account.php" method="post">
+                                    <div class="form-group">
+                                        <input type="password" name="current_password" class="form-control" placeholder="Current Password">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" name="new_password" class="form-control" placeholder="New Password">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" name="confirm_new_password" class="form-control" placeholder="Confirm New Password">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="submit" name="btnChangePassword" class="btn btn-primary" value="Change Password"/>
+                                    </div>
+                                </form>
+                            </div>  
+                    </div>
                 </div>
-                </div>
+            </div>
         </div>
-    </div>
-</div>
-    </div>
 <!-- Footer -->
 <footer class="bg-dark fixed-bottom text-white text-center">
         <a>© 2023 Copyright O.Lam & F.Strub</a>

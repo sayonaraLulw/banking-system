@@ -45,8 +45,6 @@ if(isset($_SESSION['loggedin'])){
 }    
 
 
-
-
 if (!empty($_POST['btn-deposit'])) {
     if ($_POST['money_value'] == '') {
         $error = 'Please enter a figure!';
@@ -113,7 +111,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
       }
     }
   }
-  
 ?>
 
 <!DOCTYPE html>
@@ -134,19 +131,20 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         <div class="navbar-nav">
           <a class="nav-item nav-link" href="account.php">Account</a>
           <a class="nav-item nav-link" href="logout.php">Logout</a>
-      </div>
-    </nav>
-
+        </div>
     </nav>
     <div class="container">
-        <h1>Account</h1>
-    <div class="row">
+      <h1>Home</h1>
+      <div class="row">
         <div class="col-md-6">
-                <div class="panel panel-default">
-                <div class="panel-heading"> 
-                <h4>Account balance <?=$balance?> CHF</h4>
-              </div>
-                <div class="panel-body">
+          <div class="panel panel-default">
+            <div class="panel-heading"> 
+              <h4>Account balance <?=$balance?> CHF</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel-body">
         <?php
         // Ausgabe der Fehlermeldungen
         if (!empty($error)) {
@@ -156,11 +154,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         }
         
         ?>
-
+      </div>
         <!-- Kontostand ändern -->
-        <form action="" method="POST">
-          <label for="deposit">Deposit or Withdraw Money</label>
-          <input type="number" name="money_value" class="form-control" id="modvalue" value="0" maxlength="30"> <br>
+        <form method="POST">
+          <label>Deposit or Withdraw Money</label>
+          <input type="number" name="money_value" class="form-control" id="modvalue" value="0"> <br>
           <button type="submit" name="btn-deposit" value="submit" class="btn btn-primary">Deposit</button>
           <button style="background-color:Tomato; border:1px solid Tomato;" type="submit" name="btn-withdraw" value="submit" class="btn btn-primary">Withdraw</button>
           <button type="submit" name="btn-reset" value="reset" class="btn btn-secondary">Reset</button>

@@ -117,7 +117,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           echo "<div class=\"alert alert-danger\" role=\"alert\">" . $error . "</div>";
         }
         ?>
-        <form action="" method="POST">
+        <form method="POST">
           <!-- Username input -->
           <div class="form-group">
             <label for="username">Username *</label>
@@ -127,7 +127,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 						pattern="(?=.*[a-z])(?=.*[A-Z])[a-zA-Z]{6,}"
 						title="Upper and lowercase, atleast 6 characters."
 						maxlength="30" 
-						required="true">
+						required="required">
 		</div>
           <!-- Password input -->
           <div class="form-group">
@@ -137,7 +137,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 						pattern="(?=^.{8,}$)((?=.*\d+)(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
 						title="at least one upper case letter, one lower case letter, one number and one special character, at least 8 characters long, no umlauts."
 						maxlength="255"
-						required="true">
+						required="required">
 		</div>
           <button type="submit" name="btn-login" value="submit" class="btn btn-primary">Login</button>
           <button type="reset" name="btn-reset" value="reset" class="btn btn-secondary">Reset</button>
