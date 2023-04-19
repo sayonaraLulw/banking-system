@@ -15,37 +15,7 @@ if(isset($_SESSION['loggedin'])){
     } else {
 
     header('Location: notLoggedIn.php');
-    }
-    // Ausgabe der Fehlermeldungen
-    if (!empty($error)) {
-        echo "<div class=\"alert alert-danger\" role=\"alert\">" . $error . "</div>";
-    } else if (!empty($message)) {
-        echo "<div class=\"alert alert-success\" role=\"alert\">" . $message . "</div>";
-    }
-
-    // -- Kontostand anzeigen -- //
-    $query = "SELECT username, money FROM users WHERE username = ?";
-
-    // Query vorbereiten
-    $stmt = $mysqli->prepare($query);
-    if ($stmt === false) {
-      $error .= 'prepare() failed ' . $mysqli->error . '<br />';
-    }
-    // Parameter an Query binden
-    if (!$stmt->bind_param("s", $username)) {
-      $error .= 'bind_param() failed ' . $mysqli->error . '<br />';
-    }
-    // Query ausführen
-    if (!$stmt->execute()) {
-      $error .= 'execute() failed ' . $mysqli->error . '<br />';
-    }
-    // Daten auslesen
-    $result = $stmt->get_result();
-
-    // Userdaten lesen
-    if ($row = $result->fetch_assoc()) {
-      echo "<h2>Kontostand: " . $row["money"] . "</h2>";
-    }
+    }    
 ?>
 
 <!DOCTYPE html>
@@ -72,6 +42,39 @@ if(isset($_SESSION['loggedin'])){
     </nav>
     <div class="container">
         <h1>Home</h1>
+        <?php
+        // Ausgabe der Fehlermeldungen
+        if (!empty($error)) {
+            echo "<div class=\"alert alert-danger\" role=\"alert\">" . $error . "</div>";
+        } else if (!empty($message)) {
+            echo "<div class=\"alert alert-success\" role=\"alert\">" . $message . "</div>";
+        }
+        ?>
+        <!-- Kontostand Anzeige -->
+        <?php
+        $query = "SELECT username, money FROM users WHERE username = ?";
+
+        // Query vorbereiten
+        $stmt = $mysqli->prepare($query);
+        if ($stmt === false) {
+          $error .= 'prepare() failed ' . $mysqli->error . '<br />';
+        }
+        // Parameter an Query binden
+        if (!$stmt->bind_param("s", $username)) {
+          $error .= 'bind_param() failed ' . $mysqli->error . '<br />';
+        }
+        // Query ausführen
+        if (!$stmt->execute()) {
+          $error .= 'execute() failed ' . $mysqli->error . '<br />';
+        }
+        // Daten auslesen
+        $result = $stmt->get_result();
+
+        // Userdaten lesen
+		    if ($row = $result->fetch_assoc()) {
+          echo "<h2>Kontostand: " . $row["money"] . "</h2>";
+        }
+        ?>
 
         <!-- Kontostand ändern -->
         <form action="" method="POST">
@@ -106,6 +109,8 @@ if(isset($_SESSION['loggedin'])){
 
         // Userdaten lesen
         $currentMoney = $row['money'];
+
+        // Geld einzahlen
 
         ?>
 
