@@ -6,9 +6,10 @@ include('include/dbconnector.inc.php');
 session_start();
 session_regenerate_id(true);
 
-$money_value = $error = $message = '';
+$calculated_balance = $money_value = $error = $message = '';
 $username = $_SESSION['username'];
 echo $balance = '';
+
 
 if(isset($_SESSION['loggedin'])){
     // Aktueller Kontostand auslesen
@@ -51,7 +52,11 @@ if (!empty($_POST['btn-deposit'])) {
         $error = 'Please enter a figure!';
     } elseif ($_POST['money_value'] == '0') {
         $error = 'Please enter a figure over zero!';
-    } 
+    } elseif (empty($error)){
+    $money_value = trim($_POST['money_value']);
+    $calculated_balance = $balance + $money_value;
+    $message = 'Calculated new Balance';
+    }
 }
 
 
@@ -60,51 +65,55 @@ if (!empty($_POST['btn-withdraw'])) {
       $error = 'Please enter a figure!';
   } elseif ($_POST['money_value'] == '0') {
       $error = 'Please enter a figure over zero!';
-  } 
+  } elseif (empty($error)){
   $money_value = trim($_POST['money_value']);
   $calculated_balance = $balance - $money_value;
-  $message = 'Calculating new Balance';
+  $message = 'Calculated new Balance';
+  }
 }
 
-//btn-reset 
-//UPDATE `users` SET `money`='100' WHERE username="Felizian";
+
+if (!empty($_POST['btn-reset'])) {
+  $calculated_balance = 0;
+  $message = 'Calculated new Balance';
+}
+
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
-  if (empty($error)|| $message == 'Calculating new Balance') {
+
+  if (empty($error)|| $message == 'Calculated new Balance') {
       // Query erstellen
       $query = "UPDATE users SET money=$calculated_balance WHERE username= ?";;
       
       // Query vorbereiten
       $stmt = $mysqli->prepare($query);
+      
       if ($stmt === false) {
           $error .= 'prepare() failed ' . $mysqli->error . '<br />';
       }
+      
       // Parameter an Query binden
       if (!$stmt->bind_param("s", $username)) {
           $error .= 'bind_param() failed ' . $mysqli->error . '<br />';
       }
+      
       // Query ausführen
       if (!$stmt->execute()) {
           $error .= 'execute() failed ' . $mysqli->error . '<br />';
-      }
-      // Daten auslesen
-      $result = $stmt->get_result();
-  
-      // Userdaten lesen
-      if ($row = $result->fetch_assoc()) {
+      }else{
         // kein Fehler!
         if (empty($error)) {
-          $message .= "You changed your Password succesfully please logout and login again<br/ >";
-          $money_value =  '';
+          $calculated_balance =  '';
           // Verbindung schliessen
           $mysqli->close();
-          // beenden des Scriptes
           header('Location: home.php');
-          exit();
+        } else {
+          $error .= "Error update Balance";
+        }
       }
     }
   }
-}
+  
 ?>
 
 <!DOCTYPE html>
@@ -154,7 +163,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
           <input type="number" name="money_value" class="form-control" id="modvalue" value="0" maxlength="30"> <br>
           <button type="submit" name="btn-deposit" value="submit" class="btn btn-primary">Deposit</button>
           <button style="background-color:Tomato; border:1px solid Tomato;" type="submit" name="btn-withdraw" value="submit" class="btn btn-primary">Withdraw</button>
-          <button type="reset" name="btn-reset" value="reset" class="btn btn-secondary">Reset</button>
+          <button type="submit" name="btn-reset" value="reset" class="btn btn-secondary">Reset</button>
         </form>
         
     </div>

@@ -69,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				$_SESSION['username'] = $username;
 				$_SESSION['loggedin'] = true;
 				// TODO - Session ID regenerieren
-				
+				session_regenerate_id(true);
 				// TODO - weiterleiten auf admin.php
 				header('Location: home.php');
 				// TODO - Script beenden
