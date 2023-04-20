@@ -67,6 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 				// TODO - Session personifizieren
 				$_SESSION['username'] = $username;
+				$_SESSION['id'] = $id;
 				$_SESSION['loggedin'] = true;
 				// TODO - Session ID regenerieren
 				session_regenerate_id(true);

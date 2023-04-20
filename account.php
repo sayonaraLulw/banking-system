@@ -148,7 +148,7 @@ if (empty($error)) {
                                         <input type="password" name="current_password" class="form-control" placeholder="Current Password">
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" name="new_password" class="form-control" placeholder="New Password">
+                                        <input type="password" name="new_password" class="form-control" placeholder="New Password" pattern="(?=^.{8,}$)((?=.*\d+)(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" title="at least one upper case letter, one lower case letter, one number and one special character, at least 8 characters long,no umlauts." maxlength="255" required="required">
                                     </div>
                                     <div class="form-group">
                                         <input type="password" name="confirm_new_password" class="form-control" placeholder="Confirm New Password">

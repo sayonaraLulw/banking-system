@@ -6,9 +6,8 @@ include('include/dbconnector.inc.php');
 session_start();
 session_regenerate_id(true);
 
-$calculated_balance = $money_value = $error = $message = '';
+$balance = $calculated_balance = $money_value = $error = $message = '';
 $username = $_SESSION['username'];
-echo $balance = '';
 
 
 if(isset($_SESSION['loggedin'])){

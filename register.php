@@ -9,7 +9,8 @@ include('include/dbconnector.inc.php');
 
 // Initialisierung
 $error = $message =  '';
-$firstname = $lastname = $email = $username = $password =  '';
+$firstname = $lastname = $email = $username = $password = '';
+$money_value = "0";
 
 // Wurden Daten mit "POST" gesendet?
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
@@ -85,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $password_hash = password_hash($password, PASSWORD_DEFAULT);
     
     // Query erstellen
-    $query = "Insert into users (firstname, lastname, username, password, email) values (?,?,?,?,?)";
+    $query = "Insert into users (firstname, lastname, username, password, email, money) values (?,?,?,?,?,?)";
     
     // Query vorbereiten
     $stmt = $mysqli->prepare($query);
@@ -94,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     }
     
     // Parameter an Query binden
-    if (!$stmt->bind_param('sssss', $firstname, $lastname, $username, $password_hash, $email)) {
+    if (!$stmt->bind_param('ssssss', $firstname, $lastname, $username, $password_hash, $email, $money_value)) {
       $error .= 'bind_param() failed ' . $mysqli->error . '<br />';
     }
 
