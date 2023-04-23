@@ -130,6 +130,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         <div class="navbar-nav">
           <a class="nav-item nav-link" href="account.php">Account</a>
           <a class="nav-item nav-link" href="logout.php">Logout</a>
+          <a class="nav-item nav-link" href="delete.php">Delete Account</a>
         </div>
     </nav>
     <div class="container">
